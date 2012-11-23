@@ -19,7 +19,7 @@ Dir.chdir(HERE) do
     raise "'#{cmd}' failed" unless system(cmd)
 
     Dir.chdir(BUNDLE_PATH) do
-      puts(cmd = "env CFLAGS='#{$CFLAGS}' LDFLAGS='#{$LDFLAGS}' ./configure --prefix=#{HERE} --disable-audio-hash --disable-video-hash --disable-shared --with-pic 2>&1")
+      puts(cmd = "env CFLAGS='#{$CFLAGS}' LDFLAGS='#{$LDFLAGS}' ./configure --prefix=#{HERE} --disable-audio-hash --disable-video-hash --disable-pthread --disable-shared --with-pic 2>&1")
       raise "'#{cmd}' failed" unless system(cmd)
 
       puts(cmd = "make || true 2>&1")
@@ -39,7 +39,7 @@ Dir.chdir(HERE) do
     system("cp -f libpHash.a libpHash_gem.a")
     system("cp -f libpHash.la libpHash_gem.la")
   end
-  $LIBS = " -lpthread -lpHash_gem -lstdc++ -ljpeg -lpng"
+  $LIBS = " -lpHash_gem -lstdc++ -ljpeg -lpng"
 end
 
 create_makefile 'phashion_ext'
